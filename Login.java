@@ -164,7 +164,7 @@ String sql;
     private void btloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btloginActionPerformed
         // TODO add your handling code here:
         try {
-            sql = "SELECT * FROM karyawan WHERE nama='"+txtusername.getText()+"'AND password='"+txtpassword.getText()+"'";
+            sql = "SELECT * FROM user WHERE nama='"+txtusername.getText()+"'AND password='"+txtpassword.getText()+"'";
             rs = stat.executeQuery(sql);
             if(rs.next()){
                 if(txtusername.getText().equals(rs.getString("nama")) && txtpassword.getText().equals(rs.getString("password"))){

@@ -32,18 +32,19 @@ public class transaksi extends javax.swing.JFrame {
             String nama_customer = rs.getString(2);
             String nama_liquid = rs.getString(3);
             String jenis_liquid = " ";
-            if ("creamy".equals(rs.getString(6))){
+           
+            String alamat = rs.getString(4);
+            String harga = rs.getString(5);
+             if ("creamy".equals(rs.getString(6))){
                 jenis_liquid = "creamy";
             }else{
                 jenis_liquid = "juicy";
             }
-            String alamat = rs.getString(4);
-            String harga = rs.getString(5);
             String quantity = rs.getString(7);
             String total_harga = rs.getString(8);
             String uang_pembeli = rs.getString(9);
             String kembalian = rs.getString(10);
-            String data[] = {id_barang, nama_customer,nama_liquid,jenis_liquid,alamat,harga,quantity,total_harga,uang_pembeli,kembalian};
+            String data[] = {id_barang, nama_customer,nama_liquid,alamat,harga,jenis_liquid,quantity,total_harga,uang_pembeli,kembalian};
             dtm.addRow(data);
         }
     }catch(SQLException ex){
@@ -203,7 +204,7 @@ public class transaksi extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
                         .addComponent(txtcustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(176, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btntransaksi)
@@ -344,7 +345,7 @@ public class transaksi extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 606, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -385,7 +386,7 @@ public class transaksi extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(48, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -427,7 +428,7 @@ public class transaksi extends javax.swing.JFrame {
                 }else{
                     Jenis = "Juicy";
                 }
-                String SQL = "INSERT INTO barang (id_barang,nama_customer,nama_barang,alamat,harga,jenis_liquid,quantity,total_harga,uang_pembeli,kembalian) VALUES ('"+txtid.getText()+"','"+txtnama.getText()+"','"+txtcustomer+"',"+"'"+txtalamat.getText()+"','"+txtharga.getText()+"','"+Jenis+"','"+txtquantity.getText()+"','"+txttotal.getText()+"','"+txttotal+"','"+txtpembeli+"','"+txtkembalian.getText()+"')";
+                String SQL = "INSERT INTO transaksi (id_barang,nama_customer,nama_liquid,alamat,harga,jenis_liquid,quantity,total_harga,uang_pembeli,kembalian) VALUES ('"+Integer.valueOf(txtid.getText())+"','"+txtcustomer.getText()+"','"+txtnama.getText()+"','"+txtalamat.getText()+"','"+Integer.valueOf(txtharga.getText())+"','"+Jenis+"','"+Integer.valueOf(txtquantity.getText())+"','"+Integer.valueOf(txttotal.getText())+"','"+Integer.valueOf(txtpembeli.getText())+"','"+Integer.valueOf(txtkembalian.getText())+"')";
                 int status = koneksi.execute(SQL);
                 if(status == 1){
                     JOptionPane.showMessageDialog(this, "Data berhasil ditambahkan","Sukses", JOptionPane.INFORMATION_MESSAGE);
@@ -501,7 +502,7 @@ public class transaksi extends javax.swing.JFrame {
             }else{
                 liquid = "juicy";
             }
-            String SQL = "update transkasi set"+"nama_customer='"+txtcustomer.getText()+"',"+"nama_liquid='"+txtnama.getText()+"',"+"nama_customer='"+txtcustomer.getText()+"',"+"alamat='"+txtalamat.getText()+"',"+"harga='"+txtharga.getText()+"',"+"nama_customer='"+txtcustomer.getText()+"',"+"jenis_liquid="+liquid+"',quantity='"+txtquantity.getText()+"nama_customer='"+txtcustomer.getText()+"',"+"total_harga='"+txttotal.getText()+"',uang_pembeli='"+txtpembeli.getText()+"nama_customer='"+txtcustomer.getText()+"',kembalian ='"+txtkembalian.getText()+"'"+"where id_barang='"+txtid.getText()+"'";
+            String SQL = "update transaksi set "+"nama_customer='"+txtcustomer.getText()+"',"+"nama_liquid='"+txtnama.getText()+"',"+"alamat='"+txtalamat.getText()+"',"+"harga='"+Integer.valueOf(txtharga.getText())+"',quantity='"+Integer.valueOf(txtquantity.getText())+"',"+"total_harga='"+Integer.valueOf(txttotal.getText())+"',uang_pembeli='"+Integer.valueOf(txtpembeli.getText())+"',kembalian ='"+Integer.valueOf(txtkembalian.getText())+"'"+"where id_barang='"+Integer.valueOf(txtid.getText())+"'";
             int status = koneksi.execute(SQL);
             if (status == 1){
                 JOptionPane.showMessageDialog(this,"Data berhasil diupdate","Sukses",JOptionPane.INFORMATION_MESSAGE);

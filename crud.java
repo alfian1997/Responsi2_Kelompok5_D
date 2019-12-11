@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
  * @author lenovo
  */
  class wadah{
-     String id_barang,nama_barang,jenis_liquid,nikotin,harga;
+     String id_barang,nama_barang,jenis_liquid,nikotin,harga,quantity;
        public void id_barang(String Id_barang){
         this.id_barang = Id_barang;
        }
@@ -31,6 +31,9 @@ import javax.swing.table.DefaultTableModel;
        }
        public void harga(String Harga){
         this.harga = Harga;
+       }
+       public void quantity(String Quantity){
+           this.quantity = Quantity;
        }
  }
 public class crud extends javax.swing.JFrame {
@@ -62,21 +65,24 @@ public class crud extends javax.swing.JFrame {
             }
             String nikotin = rs.getString(4);
             String harga = rs.getString(5);
+            String quantity = rs.getString(6);
             wadah tempat = new wadah();
             tempat.id_barang = id_barang;
             tempat.nama_barang = nama_barang;
             tempat.jenis_liquid = jenis_liquid;
             tempat.nikotin = nikotin;
             tempat.harga = harga;
+            tempat.quantity = quantity;
             data.add(tempat);
         }
     }catch(SQLException ex){
         Logger.getLogger(crud.class.getName()).log(Level.SEVERE,null,ex); 
     }
         int x = 0;
-        if (x < data.size()){
-            String ab[] = {data.get(x).id_barang,data.get(x).nama_barang,data.get(x).jenis_liquid,data.get(x).nikotin,data.get(x).harga};
+        while (x < data.size()){
+            String ab[] = {data.get(x).id_barang,data.get(x).nama_barang,data.get(x).jenis_liquid,data.get(x).nikotin,data.get(x).harga,data.get(x).quantity};
             dtm.addRow(ab);
+            x=x+1;
         }
     tblData.setModel(dtm);
     }
@@ -147,6 +153,11 @@ public class crud extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblData.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDataMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblData);
 
         tbedit.setText("edit");
@@ -353,7 +364,7 @@ public class crud extends javax.swing.JFrame {
             }else{
                 liquid = "juicy";
             }
-            String SQL = "update transkasi set"+"nama_barang='"+txtnmliq.getText()+"',"+"jenis_liquid="+liquid+"',"+"nikotin='"+txtnikotin.getText()+"',"+"harga='"+txtharga.getText()+"',"+"harga='"+txtharga.getText()+"',"+"quantity='"+txtquantity.getText()+"',"+"jenis_liquid="+liquid+"',quantity='"+txtquantity.getText()+"'";
+            String SQL = "update barang set "+"nama_barang='"+txtnmliq.getText()+"',"+"jenis_barang='"+liquid+"',"+"nikotin='"+txtnikotin.getText()+"',"+"harga='"+txtharga.getText()+"',"+"quantity='"+txtquantity.getText()+"' where id_barang='"+Integer.valueOf(txtid.getText())+"'";
             int status = koneksi.execute(SQL);
             if (status == 1){
                 JOptionPane.showMessageDialog(this,"Data berhasil diupdate","Sukses",JOptionPane.INFORMATION_MESSAGE);
@@ -362,6 +373,23 @@ public class crud extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Data gagal diupdate","Sukses",JOptionPane.WARNING_MESSAGE);
             }}    
     }//GEN-LAST:event_tbeditActionPerformed
+
+    private void tblDataMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDataMouseClicked
+        // TODO add your handling code here:
+        int baris = tblData.getSelectedRow();
+        if(baris != -1){
+            txtid.setText(tblData.getValueAt(baris,0).toString());
+            txtnmliq.setText(tblData.getValueAt(baris,1).toString());
+            if("Creamy".equals(tblData.getValueAt(baris,2).toString())){
+                rdcreamy.setSelected(true);
+            }else{
+                rdjuicy.setSelected(true);
+            }
+            txtnikotin.setText(tblData.getValueAt(baris,3).toString());
+            txtharga.setText(tblData.getValueAt(baris,4).toString());
+            txtquantity.setText(tblData.getValueAt(baris,5).toString());
+        }     
+    }//GEN-LAST:event_tblDataMouseClicked
 
     /**
      * @param args the command line arguments
